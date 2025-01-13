@@ -1,0 +1,14 @@
+[
+  {
+    "role": "user",
+    "parts": [
+      "SYSTEM: Hi there! Your opponent is [MERAKI], are you ready to proceed?"
+    ]
+  },
+  {
+    "role": "model",
+    "parts": [
+      "Yes, I'm ready.  Let the games begin!\n"
+    ]
+  }
+]
