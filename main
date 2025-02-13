@@ -84,7 +84,9 @@ class Meraki:
         bugsDir.mkdir(parents=True, exist_ok=True)
         safeDir.mkdir(parents=True, exist_ok=True)
         analyzed_dir.mkdir(parents=True, exist_ok=True)
-        
+
+    
+        self.LLM.respond(f"The following scripts are the source files of the website: {url}")
         for item in Path(web_dir / 'scrapped').iterdir():
             if item.is_file():
                 try:
