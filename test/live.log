@@ -1,0 +1,11 @@
+[2025-02-07 20:40:31,366] [INFO]  Request from 127.0.0.1 handled in 33.100 ms
+[2025-02-07 20:42:32,070] [INFO]  Request from 127.0.0.1 handled in 33.100 ms
+[2025-02-07 20:42:50,757] [INFO]  Request from 127.0.0.1 handled 1n 33.100 ms
+[2025-02-07 20:44:13,956] [INFO]  Request from 127.0.0.1 handled in 33.100 ms
+[2025-02-07 20:44:23,497] [INFO]  Request from 127.0.0.1 handled in 33.100 ms
+[2025-02-07 20:44:53,107] [INFO]  Request from 127.0.0.1 handled in 33.100 ms
+[2025-02-07 20:45:32,761] [INFO]  Request from 127.0.0.1 handled in 33.100 ms
+[2025-02-07 20:45:39,533] [INFO]  Request from 127.0.0.1 handled in 33.100 ms
+[2025-02-07 20:46:26,124] [INFO]  Request from 127.0.0.1 handled in 33.100 ms
+[2025-02-07 20:46:26,129] [CRITICAL]  This is a custom FAIL level log.
+[2025-02-07 20:46:26,131] [INFO]  This is a SUCCESS level log

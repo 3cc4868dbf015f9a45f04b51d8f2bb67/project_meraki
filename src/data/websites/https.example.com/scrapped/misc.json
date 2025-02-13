@@ -1,0 +1,115 @@
+[
+  {
+    "method": "Network.responseReceived",
+    "params": {
+      "frameId": "CF3DBF658923DE3BC746546E5B5AAE6C",
+      "hasExtraInfo": true,
+      "loaderId": "9AABEBA076A62B08839DF7EB31FAB4F0",
+      "requestId": "9AABEBA076A62B08839DF7EB31FAB4F0",
+      "response": {
+        "alternateProtocolUsage": "unspecifiedReason",
+        "charset": "",
+        "connectionId": 73,
+        "connectionReused": false,
+        "encodedDataLength": 905,
+        "fromDiskCache": false,
+        "fromPrefetchCache": false,
+        "fromServiceWorker": false,
+        "headers": {
+          "accept-ranges": "bytes",
+          "alt-svc": "h3=\":443\"; ma=93600,h3-29=\":443\"; ma=93600,h3-Q050=\":443\"; ma=93600,quic=\":443\"; ma=93600; v=\"46,43\"",
+          "cache-control": "max-age=2695",
+          "content-encoding": "gzip",
+          "content-length": "648",
+          "content-type": "text/html",
+          "date": "Thu, 13 Feb 2025 15:10:30 GMT",
+          "etag": "\"84238dfc8092e5d9c0dac8ef93371a07:1736799080.121134\"",
+          "last-modified": "Mon, 13 Jan 2025 20:11:20 GMT",
+          "vary": "Accept-Encoding"
+        },
+        "mimeType": "text/html",
+        "protocol": "h2",
+        "remoteIPAddress": "23.192.228.84",
+        "remotePort": 443,
+        "responseTime": 1739459431288.561,
+        "securityDetails": {
+          "certificateId": 0,
+          "certificateTransparencyCompliance": "compliant",
+          "cipher": "AES_256_GCM",
+          "encryptedClientHello": false,
+          "issuer": "DigiCert Global G3 TLS ECC SHA384 2020 CA1",
+          "keyExchange": "",
+          "keyExchangeGroup": "X25519",
+          "protocol": "TLS 1.3",
+          "sanList": [
+            "*.example.com",
+            "example.com"
+          ],
+          "serverSignatureAlgorithm": 1027,
+          "signedCertificateTimestampList": [
+            {
+              "hashAlgorithm": "SHA-256",
+              "logDescription": "Google 'Argon2026h1' log",
+              "logId": "0E5794BCF3AEA93E331B2C9907B3F790DF9BC23D713225DD21A925AC61C54E21",
+              "origin": "Embedded in certificate",
+              "signatureAlgorithm": "ECDSA",
+              "signatureData": "3043021F24170F5A4C7CD2293BB8B616E8E1AF358BC9E0D98E47645773DBAF8853C7E9022052DBAE51E9C7213E5435625F7C1051AB7D6D5068BB6434D2AEB3347F8CF555AE",
+              "status": "Verified",
+              "timestamp": 1736902885319.0
+            },
+            {
+              "hashAlgorithm": "SHA-256",
+              "logDescription": "DigiCert 'Wyvern2026h1'",
+              "logId": "6411C46CA412ECA7891CA2022E00BCAB4F2807D41E3527ABEAFED503C97DCDF0",
+              "origin": "Embedded in certificate",
+              "signatureAlgorithm": "ECDSA",
+              "signatureData": "3044022070AEE8D807855D50BE27FF1BB047ABB7223061FC8DD721FF1CB82F3AD895EB1702207230532F0E11A0E2C626D4CB2B0C655E75CC2913878DD11B997051A65B1C0972",
+              "status": "Verified",
+              "timestamp": 1736902885381.0
+            },
+            {
+              "hashAlgorithm": "SHA-256",
+              "logDescription": "DigiCert 'Sphinx2026h1'",
+              "logId": "499C9B69DE1D7CECFC36DECD8764A6B85BAF0A878019D15552FBE9EB29DDF8C3",
+              "origin": "Embedded in certificate",
+              "signatureAlgorithm": "ECDSA",
+              "signatureData": "3045022068587AEF2110DA5C209B75F5EA7DA25A31101482366F67E938DB415626D9556C022100F9A6CAA35C362C2046F58728744BC6C13773B8BB6B00F738AC2889588D983CC2",
+              "status": "Verified",
+              "timestamp": 1736902885401.0
+            }
+          ],
+          "subjectName": "*.example.com",
+          "validFrom": 1736899200,
+          "validTo": 1768521599
+        },
+        "securityState": "secure",
+        "status": 200,
+        "statusText": "",
+        "timing": {
+          "connectEnd": 1133.877,
+          "connectStart": 7.271,
+          "dnsEnd": 6.868,
+          "dnsStart": 0,
+          "proxyEnd": -1,
+          "proxyStart": -1,
+          "pushEnd": 0,
+          "pushStart": 0,
+          "receiveHeadersEnd": 1690.293,
+          "receiveHeadersStart": 1689.044,
+          "requestTime": 41623.949659,
+          "sendEnd": 1134.684,
+          "sendStart": 1134.397,
+          "sslEnd": 1133.853,
+          "sslStart": 556.659,
+          "workerFetchStart": -1,
+          "workerReady": -1,
+          "workerRespondWithSettled": -1,
+          "workerStart": -1
+        },
+        "url": "https://example.com/"
+      },
+      "timestamp": 41625.643217,
+      "type": "Document"
+    }
+  }
+]

@@ -1,0 +1,148 @@
+import argparse, os, asyncio
+from pathlib import Path
+from typing import Optional
+
+from src.scripts.logger import logHandler
+from src.scripts.models import geminiMeraki
+from src.scripts.scrapper import scrape_url
+
+class TokyoNight:
+    CYAN: str = '\033[1;38;5;158m'
+    PINK: str = '\033[1;38;5;206m'
+    PURPLE: str = '\033[38;5;141m'
+    BLUE: str = '\033[1;38;5;69m'
+    LIGHT_BLUE: str = '\033[38;5;111m'
+    BG_BLACK: str = '\033[1;48;5;104m'
+    RESET: str = '\033[0m'
+
+class StereotypeHacker:
+    GREEN: str = '\033[1;38;5;118m'
+    LIGHT_GRAY: str = '\033[38;5;146m'
+    RESET: str = '\033[0m'
+
+class CustomHelpFormatter(argparse.HelpFormatter):
+    def _format_action_invocation(self, action):
+        invocation = super()._format_action_invocation(action)
+        if invocation.startswith('-'):
+            parts = invocation.split(', ')
+            colored_parts = [f"{TokyoNight.PINK}{part}{TokyoNight.RESET}" for part in parts]
+            return ', '.join(colored_parts)
+        return invocation
+
+def extractArgs():
+    parser = argparse.ArgumentParser(
+        description=f"{TokyoNight.CYAN}Process command-line arguments for language model settings.",
+        formatter_class=CustomHelpFormatter,
+        epilog=(
+            f"{TokyoNight.BLUE}Example Usage:\n{TokyoNight.RESET}"
+            f"{TokyoNight.LIGHT_BLUE}py main -llm gemini -tokens TOKEN1 TOKEN2 TOKEN3 -url https://example.com{TokyoNight.RESET}"
+        )
+    )
+
+    parser.add_argument(
+        "-llm",
+        required=True,
+        choices=["openai", "gemini"],
+        help=f"{TokyoNight.PURPLE}Language model to use. Supported values: openai or gemini. (Default gemini)"
+    )
+
+    parser.add_argument(
+        "-mem",
+        required=False,
+        type=bool,
+        help=f"{TokyoNight.PURPLE}Clear the model's previous memory, before starting."
+    )
+
+    parser.add_argument(
+        "-tokens",
+        required=True,
+        nargs='+',
+        help=f"{TokyoNight.PURPLE}Tokens for the language model. Provide multiple tokens separated by spaces."
+    )
+
+
+    parser.add_argument(
+        "-url",
+        required=True,
+        help=f"{TokyoNight.PURPLE}Website URL. Must start with http:// or https://."
+    )
+
+    args = parser.parse_args()
+    return args.llm, args.tokens, args.url, args.mem
+
+class Meraki:
+    def __init__(self, llm: str, tokens: list, url: str, reset_mem: Optional[bool]):
+        # LLM not yet implemeted- Future update maybe-
+        self.logger = asyncio.run(logHandler())
+        self.LLM = geminiMeraki(tokens=tokens, logger=self.logger, reset_mem=reset_mem)
+        
+        web_dir: Path = scrape_url(url, self.logger)
+        
+        analyzed_dir = web_dir / 'analyzed'
+        bugsDir = analyzed_dir / "bugs"
+        safeDir = analyzed_dir / "safe"
+        bugsDir.mkdir(parents=True, exist_ok=True)
+        safeDir.mkdir(parents=True, exist_ok=True)
+        analyzed_dir.mkdir(parents=True, exist_ok=True)
+        
+        for item in Path(web_dir / 'scrapped').iterdir():
+            if item.is_file():
+                try:
+                    with item.open('r', encoding='utf-8') as f:
+                        script_content = f.read()
+                except Exception as e:
+                    self.logger.error(f"Failed to read file {item.name}: {e}")
+                    continue
+
+                lcl = self.LLM.respond(script=script_content)
+                
+                if lcl.error:
+                    self.logger.error(lcl.error)
+                    continue
+
+                thought_text = ""
+                if lcl.thought:
+                    thought_text = lcl.thought.group(1) if hasattr(lcl.thought, 'group') else lcl.thought
+                    self.logger.thinking(thought_text)
+
+                if lcl.bugFound:
+                    bug_count = len(lcl.exploits_found)
+                    self.logger.meraki(f"{bug_count} bugs found in {item.name}")
+                    output_file = bugsDir / f"{item.stem}_report.md"
+                    self.create_md_file(output_file, thought_text, lcl.exploits_found, lcl.error or "", 'Vulnerability Report')
+                    self.logger.info(f'Processed {output_file}')
+                else:
+                    output_file = safeDir / f"{item.stem}_report.md"
+                    self.logger.meraki(f"No bugs were found for {item.name}")
+                    self.create_md_file(file_path=output_file, thoughts=thought_text, exploits_found="", error=lcl.error or "", title='Vulnerability Repport')
+                    self.logger.info(f'Processed {output_file}')
+
+    @staticmethod
+    def create_md_file(file_path: Path, thoughts: str, exploits_found: dict, error: str, title: str) -> None:
+        with file_path.open('w', encoding='utf-8') as f:
+            title = f"# {file_path.stem}'s {title}\n\n"
+            f.write(title)
+            f.write("## Exploits Found\n")
+            if exploits_found:
+                for key, value in exploits_found.items():
+                    f.write(f"**Exploit {key}:**\n")
+                    f.write("```\n")
+                    f.write(f"{value}\n")
+                    f.write("```\n\n")
+            else:
+                f.write("No exploits found.\n\n")
+            
+            f.write("## Reasoning\n")
+            f.write("```\n")
+            f.write(f"{thoughts}\n")
+            f.write("```\n\n")
+
+            if error:
+                f.write("## ERROR\n")
+                f.write("```\n")
+                f.write(f"{error}\n")
+                f.write("```\n")
+
+if __name__ == "__main__":
+    llm, tokens, url, mem = extractArgs()
+    Meraki(llm, tokens, url, reset_mem=mem)
